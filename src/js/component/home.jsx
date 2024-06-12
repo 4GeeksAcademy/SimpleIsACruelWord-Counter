@@ -13,11 +13,8 @@ function Home () {
 		return () => {
 			clearInterval(interval);
 		}
-	});
+	},);
 
-	useEffect(() => {
-		return setFormattedTime(SecsMinsHours(time));
-	}, [time]);
 
 	function SecsMinsHours (time){
 		let hours = Math.floor(time/3600);
@@ -31,20 +28,28 @@ function Home () {
 		};
 	};
 
+	useEffect(() => {
+		return setFormattedTime(SecsMinsHours(time));
+	}, [time]);
+
+	function handleClickReset () {
+		setTime(0);
+	}
+
+
 	return (
 	<div className=".container-fluid">
-		<div className="time">
+		<div className="time" id="counter">
 			<span>{formattedTime.hours <= 9 ? `0${formattedTime.hours}`: formattedTime.hours} : </span>
 			<span>{formattedTime.mins <= 9 ? `0${formattedTime.mins}`: formattedTime.mins} : </span>
 			<span>{formattedTime.secs <= 9 ? `0${formattedTime.secs}`: formattedTime.secs}</span>
 		</div>
-{/* 		<div className="buttons d-flex">
-			<button className="btn-start">Start</button>
-			<button className="btn-stop">Stop</button>
-			<button className="btn-resume">Resume</button>
-			<button className="btn-reset">Reset</button>
-		</div> */}
-	</div>)
+ 		<div className="buttons d-flex">
+			<button className="btn-reset" onClick={handleClickReset}>Reset</button>
+			
+		</div>
+	</div>
+	)
 }
 
 export default Home;
